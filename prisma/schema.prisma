@@ -1,0 +1,50 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+    provider        = "prisma-client-js"
+    previewFeatures = ["fullTextSearch", "interactiveTransactions"]
+}
+
+
+/// 用户信息 登录、密码、鉴权
+model User {
+    id          String      @id @default(cuid()) @db.Char(25)
+    create_date DateTime    @default(now())
+    update_date DateTime    @updatedAt
+    /// "用户名称，用户登录字段"
+    username    String      @unique
+    ///   "用户邮箱，密码找回用"
+    email       String      @unique
+    ///  密码
+    password    String
+    ///   "用户过期,时间戳"
+    expired     Float?      @default(0)
+    ///   "用户信息"
+    persons     Person[]
+}
+
+// 用户信息
+model Person {
+    id          String        @id @default(cuid()) @db.Char(25)
+    create_date DateTime      @default(now())
+    update_date DateTime      @updatedAt
+    user        User[]
+    name        String
+    avatar      String?
+    sex         SexType?       @default(MALE)
+    description String?
+}
+
+
+/// 性别
+enum SexType {
+    ///   "男"
+    MALE
+    ///   "女"
+    FEMALE
+    ///   "其他"
+    OTHER
+}
