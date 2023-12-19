@@ -36,7 +36,6 @@ export class AllExceptionFilter implements ExceptionFilter {
         let msg;
         if (exception instanceof HttpException) {
             const res = exception.getResponse();
-            console.log('****************4', res);
             if (typeof res !== 'string') {
                 const {
                     statusCode = exception.getStatus(),

@@ -28,7 +28,7 @@ model User {
 
 // 用户信息
 model Person {
-    id          String        @id @default(cuid()) @db.Char(25)
+    id          Int        @id @default(autoincrement()) 
     create_date DateTime      @default(now())
     update_date DateTime      @updatedAt
     user        User[]
@@ -36,6 +36,36 @@ model Person {
     avatar      String?
     sex         SexType?       @default(MALE)
     description String?
+}
+
+// 作品分类
+model Category {
+    id          Int        @id @default(autoincrement())
+    create_date DateTime   @default(now())
+    update_date DateTime   @updatedAt
+    name        String
+    description String
+    cover       String     
+}
+
+model Works {
+    id          Int        @id @default(autoincrement()) 
+    create_date DateTime      @default(now())
+    update_date DateTime      @updatedAt
+    name        String
+    description String
+    browse_count Int @default(0)
+    category_id Int 
+}
+
+
+model WorksImage {
+    id          Int        @id @default(autoincrement()) 
+    create_date DateTime      @default(now())
+    update_date DateTime      @updatedAt
+    path        String
+    is_cover    Boolean @default(false)
+    is_without_cover Boolean @default(false)
 }
 
 

@@ -87,7 +87,6 @@ export class AuthService {
         const user = await prisma.user.findUnique({
             where: { username: username },
         });
-        console.log('********************1');
         if (!user) return null;
         const isMatch = await bcrypt.compare(pass, user.password);
         if (user && isMatch) {
@@ -95,7 +94,6 @@ export class AuthService {
             const { password, ...result } = user;
             return result;
         }
-        console.log('********************2');
         return null;
     }
 

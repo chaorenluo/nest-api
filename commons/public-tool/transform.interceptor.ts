@@ -31,9 +31,9 @@ export class TransformInterceptor<T>
         loggerService.log(interval, `第 ${++num} 次请求`);
         return next.handle().pipe(
             map((data) => ({
-                code: res.statusCode,
-                data,
-                message: '操作成功',
+                code: data?.code || res.statusCode,
+                data: data?.data || data,
+                message: data?.message || '操作成功',
             })),
         );
     }
